@@ -1,21 +1,60 @@
 package conta;
 
 import java.util.Scanner;
+
+import conta.model.ContaCorrente;
+import conta.model.ContaPoupanca;
 import conta.util.Cores;
 
 public class Menu {
 	public static void main(String[] args) {
 		int opcao;
+		int numero, agencia, tipo, aniversario = 0;
+		String titular;
+		float saldo, limite;
 		Scanner leia = new Scanner(System.in);
+		
 		
 		exibirMenu();
 		do {
-			System.out.println("Digite a opção desejada: ");
+			System.out.print("\nDigite a opção desejada: ");
 			opcao = leia.nextInt();
+			leia.nextLine();
 			
 			switch(opcao) {
 			case 1:
-				System.out.println("Criar Conta\n\n");
+				System.out.println("Criar Conta\n");
+				
+				System.out.print("Digite o nome do titular da conta: ");
+				titular = leia.nextLine(); 
+				
+				System.out.print("Digite o numero da conta: ");
+				numero = leia.nextInt();
+				
+				System.out.print("Digite o saldo da conta: ");
+				saldo = leia.nextFloat();
+				
+				System.out.print("Digite a agencia da conta: ");
+				agencia = leia.nextInt();
+				
+				System.out.println("Digite o tipo da conta: ");
+				System.out.print("Sendo: 1 - Conta corrente ou 2 - Conta poupança. ");
+				tipo = leia.nextInt();
+				
+				if(tipo == 1) {
+					System.out.print("Digite o limite da conta: ");
+					limite = leia.nextInt();
+					
+					ContaCorrente novaContaC = new ContaCorrente(numero, agencia, tipo, titular, saldo, limite);
+					novaContaC.visualizar();
+				} else {
+					System.out.print("Digite seu aniversario: ");
+					aniversario = leia.nextInt();
+					
+					ContaPoupanca novaContaP = new ContaPoupanca(numero, agencia, tipo, titular, saldo, aniversario);
+					novaContaP.visualizar();
+				}
+				
 
 				break;
 			case 2:
@@ -47,8 +86,8 @@ public class Menu {
 
 				break;
 			case 9:
-				System.out.println(Cores.TEXT_WHITE_BOLD +
-						"\nBanco do Brazil Padar - O seu Futuro começa aqui!");
+				System.out.println(Cores.TEXT_CYAN_BOLD_BRIGHT +
+						"\nBanco do Brazil Padar - O seu Futuro começa aqui!" + Cores.TEXT_RESET);
 				sobre();
 				leia.close();
 				System.exit(0);
