@@ -25,11 +25,10 @@ public class Menu {
 		exibirMenu();
 		do {
 			System.out.print("\nDigite a opção desejada: ");
-			opcao = leia.nextInt();
-			leia.nextLine();
 			
 			try {
 				opcao = leia.nextInt();
+				leia.nextLine();
 			}catch(InputMismatchException e){
 				System.out.println("\nDigite valores inteiros!");
 				leia.nextLine();
@@ -51,10 +50,10 @@ public class Menu {
 					System.out.println("Digite o tipo da conta: ");
 					System.out.print("Sendo: 1 - Conta corrente ou 2 - Conta poupança. ");
 					tipo = leia.nextInt();
-					if(tipo != 1 || tipo != 2) {
+					if(tipo != 1 && tipo != 2) {
 						System.out.println("Tipo inválido!");
 					}
-				} while(tipo < 1 && tipo > 2);
+				} while(tipo < 1 || tipo > 2);
 				
 				switch(tipo) {
 				case 1: 
