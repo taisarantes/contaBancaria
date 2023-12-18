@@ -1,7 +1,13 @@
 package conta;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import conta.controller.ContaController;
+import conta.model.Conta;
 import conta.model.ContaCorrente;
 import conta.model.ContaPoupanca;
 import conta.util.Cores;
@@ -13,6 +19,7 @@ public class Menu {
 		String titular;
 		float saldo, limite;
 		Scanner leia = new Scanner(System.in);
+		ContaController contas = new ContaController();
 		
 		
 		exibirMenu();
@@ -21,69 +28,103 @@ public class Menu {
 			opcao = leia.nextInt();
 			leia.nextLine();
 			
+			try {
+				opcao = leia.nextInt();
+			}catch(InputMismatchException e){
+				System.out.println("\nDigite valores inteiros!");
+				leia.nextLine();
+				opcao=0;
+			}
+			
 			switch(opcao) {
 			case 1:
 				System.out.println("Criar Conta\n");
 				
 				System.out.print("Digite o nome do titular da conta: ");
 				titular = leia.nextLine(); 
-				
-				System.out.print("Digite o numero da conta: ");
-				numero = leia.nextInt();
-				
 				System.out.print("Digite o saldo da conta: ");
 				saldo = leia.nextFloat();
-				
-				System.out.print("Digite a agencia da conta: ");
+				System.out.print("Digite o número da agencia da conta: ");
 				agencia = leia.nextInt();
 				
-				System.out.println("Digite o tipo da conta: ");
-				System.out.print("Sendo: 1 - Conta corrente ou 2 - Conta poupança. ");
-				tipo = leia.nextInt();
+				do {
+					System.out.println("Digite o tipo da conta: ");
+					System.out.print("Sendo: 1 - Conta corrente ou 2 - Conta poupança. ");
+					tipo = leia.nextInt();
+					if(tipo != 1 || tipo != 2) {
+						System.out.println("Tipo inválido!");
+					}
+				} while(tipo < 1 && tipo > 2);
 				
-				if(tipo == 1) {
+				switch(tipo) {
+				case 1: 
 					System.out.print("Digite o limite da conta: ");
 					limite = leia.nextInt();
 					
-					ContaCorrente novaContaC = new ContaCorrente(numero, agencia, tipo, titular, saldo, limite);
-					novaContaC.visualizar();
-				} else {
+					contas.cadastrar(new ContaCorrente(contas.gerarNumero(), 
+										agencia, tipo, titular, saldo, limite));
+					
+					break;
+				case 2: 
 					System.out.print("Digite seu aniversario: ");
 					aniversario = leia.nextInt();
 					
-					ContaPoupanca novaContaP = new ContaPoupanca(numero, agencia, tipo, titular, saldo, aniversario);
-					novaContaP.visualizar();
+					contas.cadastrar(new ContaPoupanca(contas.gerarNumero(), 
+										agencia, tipo, titular, saldo, aniversario));
+					
+					break;
 				}
 				
 
+				keyPress();
 				break;
 			case 2:
-				System.out.println("Listar todas as Contas\n\n");
+				System.out.println("Listar todas as Contas\n");
+				contas.listarTodas();
+			
 
+				keyPress();
 				break;
 			case 3:
-				System.out.println("Consultar dados da Conta - por número\n\n");
+				System.out.println("Consultar dados da Conta - por número\n");
+				System.out.println("Digite o número da conta: ");
+				numero = leia.nextInt();
+				System.out.println("*********************************************");
+				System.out.println("               Dados da Conta:               ");
+				System.out.println("*********************************************");
 
+				
+				keyPress();
 				break;
 			case 4:
 				System.out.println("Atualizar dados da Conta\n\n");
 
+				
+				keyPress();
 				break;
 			case 5:
 				System.out.println("Apagar a Conta\n\n");
 
+				
+				keyPress();
 				break;
 			case 6:
 				System.out.println("Saque\n\n");
 
+				
+				keyPress();
 				break;
 			case 7:
 				System.out.println("Depósito\n\n");
 
+				
+				keyPress();
 				break;
 			case 8:
 				System.out.println("Transferência entre Contas\n\n");
 
+				
+				keyPress();
 				break;
 			case 9:
 				System.out.println(Cores.TEXT_CYAN_BOLD_BRIGHT +
@@ -132,5 +173,16 @@ public class Menu {
 		System.out.println("- Tais Arantes - tais.reis.arantes@gmail.com");
 		System.out.println("- github.com/taisarantes");
 		System.out.println("*********************************************");
+	}
+	
+	public static void keyPress() {
+		try {
+		System.out.println(Cores.TEXT_RESET + "\n\nPressione Enter para Continuar...");
+		System.in.read();
+
+		} catch (IOException e) {
+		System.out.println("Você pressionou uma tecla diferente de enter!");
+
+		}
 	}
 }
