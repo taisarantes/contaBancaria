@@ -12,7 +12,14 @@ public class ContaController implements ContaRepository {
 
 	@Override
 	public void procurarPorNumero(int numero) {
+		var conta = buscarNaCollection(numero);
 		
+		if(conta != null) {
+			conta.visualizar();
+		} else {
+			System.out.println("A conta número " + numero + " não foi encontrada!"
+					+ " Tente outro número.");
+		}
 	}
 
 	@Override
@@ -32,7 +39,16 @@ public class ContaController implements ContaRepository {
 
 	@Override
 	public void atualizar(Conta conta) {
+		var buscaConta = buscarNaCollection(conta.getNumeroConta());
 		
+		if(buscaConta != null) {
+			listaContas.set(listaContas.indexOf(buscaConta), conta);
+			System.out.println("\nA conta número " + conta.getNumeroConta()
+			                         + " foi atualizada com sucesso!");
+		} else {
+			System.out.println("A conta número " + conta.getNumeroConta() 
+							+ " não foi encontrada! Tente outro número.");
+		}
 	}
 
 	@Override
@@ -60,6 +76,16 @@ public class ContaController implements ContaRepository {
 		
 		//  Na prática, este Método simula a Chave Primária de um Banco de dados,
 		// do tipo auto-incremento.
+	}
+	
+	public Conta buscarNaCollection(int numero) {
+		for(var conta : listaContas) {
+			if(conta.getNumeroConta() == numero) {
+				return conta;
+			} 
+		}
+		
+		return null;
 	}
 	
 

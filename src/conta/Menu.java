@@ -88,15 +88,58 @@ public class Menu {
 				System.out.println("Consultar dados da Conta - por número\n");
 				System.out.println("Digite o número da conta: ");
 				numero = leia.nextInt();
-				System.out.println("*********************************************");
-				System.out.println("               Dados da Conta:               ");
-				System.out.println("*********************************************");
+				contas.procurarPorNumero(numero);
 
 				
 				keyPress();
 				break;
 			case 4:
 				System.out.println("Atualizar dados da Conta\n\n");
+				System.out.println("Digite o número da conta para ser atualizada: ");
+				numero = leia.nextInt();
+				leia.nextLine();
+				var buscaConta = contas.buscarNaCollection(numero);
+				
+				if(buscaConta != null) {
+					tipo = buscaConta.getTipo();
+					
+					System.out.print("Digite o nome do titular da conta: ");
+					titular = leia.nextLine(); 
+					System.out.print("Digite o saldo da conta: ");
+					saldo = leia.nextFloat();
+					System.out.print("Digite o número da agencia da conta: ");
+					agencia = leia.nextInt();
+					
+					do {
+						System.out.println("Digite o tipo da conta: ");
+						System.out.print("Sendo: 1 - Conta corrente ou 2 - Conta poupança. ");
+						tipo = leia.nextInt();
+						if(tipo != 1 && tipo != 2) {
+							System.out.println("Tipo inválido!");
+						}
+					} while(tipo < 1 || tipo > 2);
+					
+					switch(tipo) {
+					case 1: 
+						System.out.print("Digite o limite da conta: ");
+						limite = leia.nextInt();
+						
+						contas.cadastrar(new ContaCorrente(contas.gerarNumero(), 
+											agencia, tipo, titular, saldo, limite));
+						
+						break;
+					case 2: 
+						System.out.print("Digite seu aniversario: ");
+						aniversario = leia.nextInt();
+						
+						contas.cadastrar(new ContaPoupanca(contas.gerarNumero(), 
+											agencia, tipo, titular, saldo, aniversario));
+						
+						break;
+					}
+				} else {
+					System.out.println("A conta não foi encontrada!");
+				}
 
 				
 				keyPress();
