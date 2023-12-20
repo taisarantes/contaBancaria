@@ -24,8 +24,13 @@ public class ContaController implements ContaRepository {
 
 	@Override
 	public void listarTodas() {
-		for(var conta : listaContas) {
-			conta.visualizar();
+		if(listaContas.isEmpty()) {
+			System.out.println("No momento não há nenhuma conta cadastrada!");
+			System.out.println("Digite 1 para cadastrar uma conta.");
+		} else {
+			for(var conta : listaContas) {
+				conta.visualizar();
+			}
 		}
 		
 	}
@@ -43,7 +48,7 @@ public class ContaController implements ContaRepository {
 		
 		if(buscaConta != null) {
 			listaContas.set(listaContas.indexOf(buscaConta), conta);
-			System.out.println("\nA conta número " + conta.getNumeroConta()
+			System.out.println("A conta número " + conta.getNumeroConta()
 			                         + " foi atualizada com sucesso!");
 		} else {
 			System.out.println("A conta número " + conta.getNumeroConta() 
@@ -53,7 +58,17 @@ public class ContaController implements ContaRepository {
 
 	@Override
 	public void deletar(int numero) {
+		var conta = buscarNaCollection(numero);
 		
+		if(conta != null) {
+			if(listaContas.remove(conta)) {
+				System.out.println("A conta numero " + numero 
+										+ " foi deletada com sucesso!");
+			} else {
+				System.out.println("A conta número " + numero 
+							+ " não foi encontrada! Tente outro número.");
+			}
+		}
 	}
 
 	@Override

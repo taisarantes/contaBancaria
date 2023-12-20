@@ -55,6 +55,8 @@ public class Menu {
 					}
 				} while(tipo < 1 || tipo > 2);
 				
+				// ---------------------------------------------------------------------
+				// Switch case para os tipos de contas
 				switch(tipo) {
 				case 1: 
 					System.out.print("Digite o limite da conta: ");
@@ -73,16 +75,15 @@ public class Menu {
 					
 					break;
 				}
+				// ---------------------------------------------------------------------
 				
 
-				keyPress();
 				break;
 			case 2:
 				System.out.println("Listar todas as Contas\n");
 				contas.listarTodas();
 			
 
-				keyPress();
 				break;
 			case 3:
 				System.out.println("Consultar dados da Conta - por número\n");
@@ -91,10 +92,9 @@ public class Menu {
 				contas.procurarPorNumero(numero);
 
 				
-				keyPress();
 				break;
 			case 4:
-				System.out.println("Atualizar dados da Conta\n\n");
+				System.out.println("Atualizar dados da Conta\n");
 				System.out.println("Digite o número da conta para ser atualizada: ");
 				numero = leia.nextInt();
 				leia.nextLine();
@@ -119,6 +119,8 @@ public class Menu {
 						}
 					} while(tipo < 1 || tipo > 2);
 					
+					// ---------------------------------------------------------------------
+					// Switch case para os tipos de contas
 					switch(tipo) {
 					case 1: 
 						System.out.print("Digite o limite da conta: ");
@@ -137,36 +139,35 @@ public class Menu {
 						
 						break;
 					}
+					// ---------------------------------------------------------------------
 				} else {
-					System.out.println("A conta não foi encontrada!");
+					System.out.println("A conta número " + numero + " não foi encontrada!");
 				}
 
 				
-				keyPress();
 				break;
 			case 5:
-				System.out.println("Apagar a Conta\n\n");
+				System.out.println("Apagar a Conta\n");
+				System.out.println("Digite o número da conta: ");
+				numero = leia.nextInt();
+				contas.deletar(numero);
 
 				
-				keyPress();
 				break;
 			case 6:
 				System.out.println("Saque\n\n");
 
 				
-				keyPress();
 				break;
 			case 7:
 				System.out.println("Depósito\n\n");
 
 				
-				keyPress();
 				break;
 			case 8:
 				System.out.println("Transferência entre Contas\n\n");
 
 				
-				keyPress();
 				break;
 			case 9:
 				System.out.println(Cores.TEXT_CYAN_BOLD_BRIGHT +
