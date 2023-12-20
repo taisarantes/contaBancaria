@@ -27,8 +27,9 @@ public class ContaCorrente extends Conta{
 				if(this.getLimite() < valor) {
 					System.out.println("Seu limite não é suficiente para sacar o valor de " + valor);
 				}
+			} else {
+				System.out.println("Saldo insuficiente para sacar o valor de R$ " + valor);
 			}
-			System.out.println("Saldo insuficiente para sacar o valor de R$ " + valor);
 			return false;
 		}
 		this.setSaldo(this.getSaldo() - valor);
